@@ -5,7 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulaire de commande</title>
 </head>
+<script>
+document.getElementById("commande").addEventListener("submit", async function(e) {
+    e.preventDefault();
 
+    const data = {
+        nom: document.getElementById("nom").value,
+        telephone: document.getElementById("telephone").value,
+        adresse: document.getElementById("adresse").value,
+        produit: document.getElementById("produit").value,
+        quantite: document.getElementById("cartons").value
+    };
+
+    const response = await fetch("/api/send", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+        alert("Commande envoyée avec succès !");
+        document.getElementById("commande").reset();
+    } else {
+        alert("Erreur lors de l'envoi.");
+    }
+});
+</script>
 <body>
 
 <h2>📦 Formulaire de commande</h2>
